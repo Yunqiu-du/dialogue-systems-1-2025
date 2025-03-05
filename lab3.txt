@@ -1,0 +1,51 @@
+#Source: https://youtu.be/_e5-8sO-iCM?si=XUA3zBpPcmEEJrj1
+
+<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US" xmlns:mstts="http://www.w3.org/2001/mstts">
+    <voice name="en-GB-OllieMultilingualNeural">  
+        <prosody rate="-10%" pitch="-5%">
+            <mstts:express-as style="narration">
+                <p>I wandered lonely as a cloud</p>
+                <break time="500ms"/>
+                <p>That floats on high o'er vales and hills,</p>
+                <break time="700ms"/>
+                <p>When all at once I saw a crowd,</p>
+                <break time="500ms"/>
+                <p>A host, of golden daffodils;</p>
+                <break time="600ms"/>
+
+                <p>Beside the lake, beneath the trees,</p>
+                <p>Fluttering and dancing in the breeze.</p>
+                <break time="1s"/>
+
+                <p>Continuous as the stars that shine</p>
+                <p>And twinkle on the Milky Way,</p>
+                <break time="500ms"/>
+                <p>They stretched in never-ending line</p>
+                <p>Along the margin of a bay:</p>
+                <break time="600ms"/>
+                <p>Ten thousand saw I at a glance,</p>
+                <p>Tossing their heads in sprightly dance.</p>
+                <break time="1s"/>
+
+                <p>The waves beside them danced; but they</p>
+                <p>Out-did the sparkling waves in glee:</p>
+                <break time="700ms"/>
+                <p>A poet could not but be gay,</p>
+                <p>In such a jocund company:</p>
+                <break time="600ms"/>
+                <p>I gazed—and gazed—but little thought</p>
+                <p>What wealth the show to me had brought:</p>
+                <break time="1.2s"/>
+
+                <p>For oft, when on my couch I lie</p>
+                <p>In vacant or in pensive mood,</p>
+                <break time="700ms"/>
+                <p>They flash upon that inward eye</p>
+                <p>Which is the bliss of solitude;</p>
+                <break time="600ms"/>
+                <p>And then my heart with pleasure fills,</p>
+                <p>And dances with the daffodils.</p>
+            </mstts:express-as>
+        </prosody>
+    </voice>
+</speak>
