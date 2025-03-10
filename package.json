@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@statelyai/inspect": "^0.4.0",
+    "speechstate": "^2.9.2",
+    "xstate": "^5.19.2"
+  },
+  "packageManager": "yarn@4.7.0",
+  "devDependencies": {
+    "vite": "^6.2.1"
+  }
+}
