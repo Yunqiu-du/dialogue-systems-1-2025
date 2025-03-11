@@ -1,0 +1,258 @@
+{
+    "projectFileVersion": "2024-11-15-preview",
+    "stringIndexType": "Utf16CodeUnit",
+    "metadata": {
+        "projectKind": "Conversation",
+        "settings": {
+            "confidenceThreshold": 0,
+            "normalizeCasing": false,
+            "augmentDiacritics": false
+        },
+        "projectName": "assignment-lab4",
+        "multilingual": true,
+        "description": "",
+        "language": "en-us"
+    },
+    "assets": {
+        "projectKind": "Conversation",
+        "intents": [
+            {
+                "category": "None"
+            },
+            {
+                "category": "create_meetings"
+            },
+            {
+                "category": "who_is_X"
+            }
+        ],
+        "entities": [
+            {
+                "category": "Meeting Person",
+                "compositionSetting": "combineComponents"
+            },
+            {
+                "category": "Meeting Day",
+                "compositionSetting": "combineComponents"
+            },
+            {
+                "category": "Meeting Time",
+                "compositionSetting": "combineComponents"
+            },
+            {
+                "category": "Confirmation",
+                "compositionSetting": "combineComponents"
+            }
+        ],
+        "utterances": [
+            {
+                "text": "Tell me more about Jennie Kim's achievements.",
+                "language": "en-us",
+                "intent": "who_is_X",
+                "entities": [
+                    {
+                        "category": "Meeting Person",
+                        "offset": 19,
+                        "length": 10
+                    }
+                ],
+                "dataset": "Train"
+            },
+            {
+                "text": "Is Jennie Kim a singer?",
+                "language": "en-us",
+                "intent": "who_is_X",
+                "entities": [],
+                "dataset": "Train"
+            },
+            {
+                "text": "What are Jennie Kim's most popular songs?",
+                "language": "en-us",
+                "intent": "who_is_X",
+                "entities": [],
+                "dataset": "Train"
+            },
+            {
+                "text": "Tell me about Jennie Kim's career.",
+                "language": "en-us",
+                "intent": "who_is_X",
+                "entities": [],
+                "dataset": "Train"
+            },
+            {
+                "text": "What is Jennie Kim's role in Blackpink?",
+                "language": "en-us",
+                "intent": "who_is_X",
+                "entities": [],
+                "dataset": "Train"
+            },
+            {
+                "text": "Tell me about Jennie Kim's background.",
+                "language": "en-us",
+                "intent": "who_is_X",
+                "entities": [],
+                "dataset": "Train"
+            },
+            {
+                "text": "What is Jennie Kim famous for?",
+                "language": "en-us",
+                "intent": "who_is_X",
+                "entities": [],
+                "dataset": "Train"
+            },
+            {
+                "text": "Where is Jennie Kim from?",
+                "language": "en-us",
+                "intent": "who_is_X",
+                "entities": [],
+                "dataset": "Train"
+            },
+            {
+                "text": "Give me some information about Jennie Kim.",
+                "language": "en-us",
+                "intent": "who_is_X",
+                "entities": [],
+                "dataset": "Train"
+            },
+            {
+                "text": "Can you tell me about Jennie Kim?",
+                "language": "en-us",
+                "intent": "who_is_X",
+                "entities": [],
+                "dataset": "Train"
+            },
+            {
+                "text": "Who is Jennie Kim?",
+                "language": "en-us",
+                "intent": "who_is_X",
+                "entities": [],
+                "dataset": "Train"
+            },
+            {
+                "text": "Create a meeting invite for Wednesday.",
+                "language": "en-us",
+                "intent": "create_meetings",
+                "entities": [
+                    {
+                        "category": "Meeting Day",
+                        "offset": 28,
+                        "length": 9
+                    }
+                ],
+                "dataset": "Train"
+            },
+            {
+                "text": "Help me schedule a meeting today.",
+                "language": "en-us",
+                "intent": "create_meetings",
+                "entities": [
+                    {
+                        "category": "Meeting Day",
+                        "offset": 27,
+                        "length": 5
+                    }
+                ],
+                "dataset": "Train"
+            },
+            {
+                "text": "Please create a meeting at 3PM.",
+                "language": "en-us",
+                "intent": "create_meetings",
+                "entities": [
+                    {
+                        "category": "Meeting Time",
+                        "offset": 27,
+                        "length": 3
+                    }
+                ],
+                "dataset": "Train"
+            },
+            {
+                "text": "Can you book a conference for me?",
+                "language": "en-us",
+                "intent": "create_meetings",
+                "entities": [],
+                "dataset": "Train"
+            },
+            {
+                "text": "Set up a meeting this Friday.",
+                "language": "en-us",
+                "intent": "create_meetings",
+                "entities": [
+                    {
+                        "category": "Meeting Day",
+                        "offset": 17,
+                        "length": 11
+                    }
+                ],
+                "dataset": "Train"
+            },
+            {
+                "text": "I'd like to book a meeting.",
+                "language": "en-us",
+                "intent": "create_meetings",
+                "entities": [],
+                "dataset": "Train"
+            },
+            {
+                "text": "Book a meeting with Xin at 11AM.",
+                "language": "en-us",
+                "intent": "create_meetings",
+                "entities": [
+                    {
+                        "category": "Meeting Person",
+                        "offset": 20,
+                        "length": 3
+                    }
+                ],
+                "dataset": "Train"
+            },
+            {
+                "text": "Schedule a meeting for tomorrow.",
+                "language": "en-us",
+                "intent": "create_meetings",
+                "entities": [
+                    {
+                        "category": "Meeting Day",
+                        "offset": 23,
+                        "length": 8
+                    }
+                ],
+                "dataset": "Train"
+            },
+            {
+                "text": "I want to schedule a Zoom call.",
+                "language": "en-us",
+                "intent": "create_meetings",
+                "entities": [],
+                "dataset": "Train"
+            },
+            {
+                "text": "Set up a conference next Monday.",
+                "language": "en-us",
+                "intent": "create_meetings",
+                "entities": [
+                    {
+                        "category": "Meeting Day",
+                        "offset": 20,
+                        "length": 11
+                    }
+                ],
+                "dataset": "Train"
+            },
+            {
+                "text": "I need to book a meeting with my manager",
+                "language": "en-us",
+                "intent": "create_meetings",
+                "entities": [
+                    {
+                        "category": "Meeting Person",
+                        "offset": 30,
+                        "length": 10
+                    }
+                ],
+                "dataset": "Train"
+            }
+        ]
+    }
+}
