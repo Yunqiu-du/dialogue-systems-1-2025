@@ -34,6 +34,7 @@ const grammar: { [index: string]: GrammarEntry } = {
   victoria: { person: "Victoria Daniilidou" },
   bella: { person: "Bella Du" },
   xin: { person: "Xin Bian" }, 
+  jennie: { person: "Jennie Kim" },
 
   monday: { day: "Monday" },
   tuesday: { day: "Tuesday" },
@@ -132,6 +133,7 @@ const dmMachine = setup({
           }),
           target: "AskDay",
         },
+        LISTEN_COMPLETE: {},
     },
   },
       AskDay: {
@@ -153,6 +155,7 @@ const dmMachine = setup({
               }),
               target: "AskFullDay",
             },
+            LISTEN_COMPLETE: {},
           },
         },
         AskFullDay: {
@@ -176,6 +179,7 @@ const dmMachine = setup({
                 target: "AskTime",
               },
             ],
+            LISTEN_COMPLETE: {},
           },
         },
         ConfirmFullDay: {
@@ -201,6 +205,7 @@ const dmMachine = setup({
               }),
               target: "ConfirmAppointment",
             },
+            LISTEN_COMPLETE: {},
           },
         },
         ConfirmAppointment: {
@@ -217,6 +222,7 @@ const dmMachine = setup({
               guard: ({ event }) => parseUtterance(String(event.value))?.confirmation === true,
               target: "AppointmentCreated",
             },
+            LISTEN_COMPLETE: {},
           },
         },
         AppointmentCreated: {
