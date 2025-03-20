@@ -133,9 +133,12 @@ const dmMachine = setup({
           }),
           target: "AskDay",
         },
-        LISTEN_COMPLETE: {},
+        LISTEN_COMPLETE: {
+          target: "AskDay",
+          actions: () => console.log("Listen complete, moving to AskDay"),
+        },
+      },
     },
-  },
       AskDay: {
           entry: { type: "spst.speak", params: { utterance: "On which day is your meeting?" } },
           on: { SPEAK_COMPLETE: "ListenDay" },
@@ -155,7 +158,10 @@ const dmMachine = setup({
               }),
               target: "AskFullDay",
             },
-            LISTEN_COMPLETE: {},
+            LISTEN_COMPLETE: {
+              target: "AskFullDay",
+              actions: () => console.log("Listen complete, moving to AskFullDay"),
+            },
           },
         },
         AskFullDay: {
@@ -179,7 +185,9 @@ const dmMachine = setup({
                 target: "AskTime",
               },
             ],
-            LISTEN_COMPLETE: {},
+            LISTEN_COMPLETE: {
+              target: "AskTime",
+            },
           },
         },
         ConfirmFullDay: {
@@ -205,7 +213,10 @@ const dmMachine = setup({
               }),
               target: "ConfirmAppointment",
             },
-            LISTEN_COMPLETE: {},
+            LISTEN_COMPLETE: {
+              target: "ConfirmAppointment",
+              actions: () => console.log("Listen complete, moving to ConfirmAppointment"),
+            },
           },
         },
         ConfirmAppointment: {
@@ -222,7 +233,9 @@ const dmMachine = setup({
               guard: ({ event }) => parseUtterance(String(event.value))?.confirmation === true,
               target: "AppointmentCreated",
             },
-            LISTEN_COMPLETE: {},
+            LISTEN_COMPLETE: {
+              target: "AppointmentCreated",
+            },
           },
         },
         AppointmentCreated: {
