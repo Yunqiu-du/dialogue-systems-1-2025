@@ -34,6 +34,7 @@ const grammar: { [index: string]: GrammarEntry } = {
   victoria: { person: "Victoria Daniilidou" },
   bella: { person: "Bella Du" },
   xin: { person: "Xin Bian" }, 
+  jennie: { person: "Jennie Kim" },
 
   monday: { day: "Monday" },
   tuesday: { day: "Tuesday" },
@@ -132,8 +133,12 @@ const dmMachine = setup({
           }),
           target: "AskDay",
         },
+        LISTEN_COMPLETE: {
+          target: "AskDay",
+          actions: () => console.log("Listen complete, moving to AskDay"),
+        },
+      },
     },
-  },
       AskDay: {
           entry: { type: "spst.speak", params: { utterance: "On which day is your meeting?" } },
           on: { SPEAK_COMPLETE: "ListenDay" },
@@ -152,6 +157,10 @@ const dmMachine = setup({
                 return result?.day ? { selectedDay: result.day } : context;
               }),
               target: "AskFullDay",
+            },
+            LISTEN_COMPLETE: {
+              target: "AskFullDay",
+              actions: () => console.log("Listen complete, moving to AskFullDay"),
             },
           },
         },
@@ -176,6 +185,9 @@ const dmMachine = setup({
                 target: "AskTime",
               },
             ],
+            LISTEN_COMPLETE: {
+              target: "AskTime",
+            },
           },
         },
         ConfirmFullDay: {
@@ -201,6 +213,10 @@ const dmMachine = setup({
               }),
               target: "ConfirmAppointment",
             },
+            LISTEN_COMPLETE: {
+              target: "ConfirmAppointment",
+              actions: () => console.log("Listen complete, moving to ConfirmAppointment"),
+            },
           },
         },
         ConfirmAppointment: {
@@ -215,6 +231,9 @@ const dmMachine = setup({
           on: {
             RECOGNISED: {
               guard: ({ event }) => parseUtterance(String(event.value))?.confirmation === true,
+              target: "AppointmentCreated",
+            },
+            LISTEN_COMPLETE: {
               target: "AppointmentCreated",
             },
           },

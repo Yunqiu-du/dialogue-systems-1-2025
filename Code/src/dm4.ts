@@ -15,9 +15,9 @@ const azureCredentials = {
 const azureLanguageCredentials = {
   endpoint: "https://dialoguesystem-lab4.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2024-11-15-preview",
   key: NLU_KEY,
-  deploymentName: "assignment_lab4",
-  projectName: "assignment_lab4",
-}
+  deploymentName: "assignment-lab4",
+  projectName: "appointment-lab4",
+};
 
 const settings: Settings = {
   azureLanguageCredentials: azureLanguageCredentials,
@@ -42,6 +42,7 @@ const grammar: { [index: string]: GrammarEntry } = {
   victoria: { person: "Victoria Daniilidou" },
   bella: { person: "Bella Du" },
   xin: { person: "Xin Bian" }, 
+  jennie: { person: "Jennie Kim" },
 
   monday: { day: "Monday" },
   tuesday: { day: "Tuesday" },
@@ -82,21 +83,6 @@ function getPerson(utterance: string) {
   return (grammar[utterance.toLowerCase()] || {}).person;
 }
 
-function parseNLUIntent(event: any): { intent?: string; entity?: any } {
-  if (event.nluValue) {
-    return {
-      intent: event.nluValue.intent,
-      entity: {
-        person: event.nluValue.entities?.MeetingPerson?.[0],
-        day: event.nluValue.entities?.MeetingDay?.[0],
-        time: event.nluValue.entities?.MeetingTime?.[0],
-        confirmation: event.nluValue.entities?.confirmation?.[0],
-      },
-    };
-  }
-  return {};
-}
-
 const dmMachine = setup({
   types: {
     /** you might need to extend these */
@@ -115,7 +101,7 @@ const dmMachine = setup({
     "spst.listen": ({ context }) =>
       context.spstRef.send({
         type: "LISTEN",
-        value: {nlu: true },
+        value: { nlu: true},
       }),
   },
 }).createMachine({
@@ -146,24 +132,23 @@ const dmMachine = setup({
       on: { SPEAK_COMPLETE: "ListenPerson" },
   },
     ListenPerson: {
-      entry: ({ context }) =>
-        context.spstRef.send({
-          type: "LISTEN",
-          value: { nlu: true },
-        }),
+      entry: { type: 'spst.listen' },
       on: {
         RECOGNISED: {
           actions: assign(({ event, context }) => {
-            const { intent, entity } = parseNLUIntent(event);
-            if (intent === "BookMeetings" && entity?.person) {
-              return { selectedPerson: entity.person };
-            }
-            return context;
+            const intent = event.nluValue?.intent;
+            const entities = event.nluValue?.entities;
+            const person = entities?.person?.[0] || entities?.meeting_person?.[0];
+            return person ? { selectedPerson: person } : context;
           }),
           target: "AskDay",
         },
+        LISTEN_COMPLETE: {
+          target: "AskDay",
+          actions: () => console.log("Listen complete, moving to AskDay"),
+        },
+      },
     },
-  },
       AskDay: {
           entry: { type: "spst.speak", params: { utterance: "On which day is your meeting?" } },
           on: { SPEAK_COMPLETE: "ListenDay" },
@@ -173,21 +158,18 @@ const dmMachine = setup({
           on: { SPEAK_COMPLETE: "ListenDay" },
         },
         ListenDay: {
-          entry: ({ context }) =>
-            context.spstRef.send({
-              type: "LISTEN",
-              value: { nlu: true },
-            }),
+          entry: { type: "spst.listen" },
           on: {
             RECOGNISED: {
               actions: assign(({ event, context }) => {
-                const { intent, entity } = parseNLUIntent(event);
-                if (intent === "BookMeetings" && entity?.day) {
-                  return { selectedDay: entity.day };
-                }
-                return context;
+                const day = event.nluValue?.entities?.day?.[0];
+                return day ? { selectedDay: day } : context;
               }),
               target: "AskFullDay",
+            },
+            LISTEN_COMPLETE: {
+              target: "AskFullDay",
+              actions: () => console.log("Listen complete, moving to AskFullDay"),
             },
           },
         },
@@ -212,6 +194,9 @@ const dmMachine = setup({
                 target: "AskTime",
               },
             ],
+            LISTEN_COMPLETE: {
+              target: "AskTime",
+            },
           },
         },
         ConfirmFullDay: {
@@ -227,21 +212,18 @@ const dmMachine = setup({
           on: { SPEAK_COMPLETE: "ListenTime" },
         },
         ListenTime: {
-          entry: ({ context }) =>
-            context.spstRef.send({
-              type: "LISTEN",
-              value: { nlu: true },
-            }),
+          entry: { type: "spst.listen" },
           on: {
             RECOGNISED: {
               actions: assign(({ event, context }) => {
-                const { intent, entity } = parseNLUIntent(event);
-                if (intent === "BookMeetings" && entity?.time) {
-                  return { selectedTime: entity.time };
-                }
-                return context;
+                const time = event.nluValue?.entities?.time?.[0];
+                return time ? { selectedTime: time }: context;
               }),
               target: "ConfirmAppointment",
+            },
+            LISTEN_COMPLETE: {
+              target: "ConfirmAppointment",
+              actions: () => console.log("Listen complete, moving to ConfirmAppointment"),
             },
           },
         },
@@ -253,14 +235,13 @@ const dmMachine = setup({
           on: { SPEAK_COMPLETE: "ListenConfirmation" },
         },
         ListenConfirmation: {
-          entry: ({ context }) =>
-            context.spstRef.send({
-              type: "LISTEN",
-              value: { nlu: true },
-            }),
+          entry: { type: "spst.listen" },
           on: {
             RECOGNISED: {
               guard: ({ event }) => parseUtterance(String(event.value))?.confirmation === true,
+              target: "AppointmentCreated",
+            },
+            LISTEN_COMPLETE: {
               target: "AppointmentCreated",
             },
           },
