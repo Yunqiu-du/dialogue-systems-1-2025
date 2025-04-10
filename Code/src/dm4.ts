@@ -30,8 +30,8 @@ const settings: Settings = {
 };
 
 const famousPeople: Record<string, string> = {
-  "Jennie": "Jennie is a member of BLACKPINK, known for her charismatic stage presence and fashion influence. She recently released her solo album 'RUBY' and is also active in the fashion industry as a brand ambassador.",
-  "Rosé": "Rosé is the main vocalist of BLACKPINK. She is praised for her unique voice and emotional delivery in performances. Her single APT has gone viral lately.",
+  "JennieKim": "Jennie is a member of BLACKPINK, known for her charismatic stage presence and fashion influence. She recently released her solo album 'RUBY' and is also active in the fashion industry as a brand ambassador.",
+  "Rose": "Rosé is the main vocalist of BLACKPINK. She is praised for her unique voice and emotional delivery in performances. Her single APT has gone viral lately.",
   "Taylor": "Taylor Swift is a globally acclaimed singer-songwriter known for her narrative songwriting style. She has won multiple Grammy Awards and is known for albums like '1989', 'Red', and 'Midnights'. She recently completed her Eras Tour.",
   "JustinBieber": "Justin Bieber is a Canadian singer, songwriter, and global pop sensation who gained fame as a teenager. You must hear his songs like 'Baby', 'Sorry', and 'Peaches', Bieber has earned multiple Grammy Awards and continues to influence pop culture worldwide with his music and personal journey.",
   "SZA": "SZA is an American singer-songwriter and one of the leading figures in contemporary R&B. Her debut album 'Ctrl' received critical acclaim and was nominated for multiple Grammy Awards. Known for her soulful voice and introspective lyrics, SZA has become a defining voice in modern music.",
