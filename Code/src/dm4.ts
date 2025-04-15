@@ -125,7 +125,11 @@ const dmMachine = setup({
             actions: { type: "setPerson"}
           },
           { 
+<<<<<<< HEAD
             target: "Meeting",
+=======
+            target: "CreateMeeting",
+>>>>>>> main
             guard: ({ context }) => context.interpretation?.topIntent === "createMeeting",
             actions: { type: "setMeetingInfo" }
           },
@@ -175,6 +179,7 @@ const dmMachine = setup({
         params: ({ context }) => {
           const personName = context.person;
 
+<<<<<<< HEAD
           if (personName && famousPeople[personName]) {
             return { utterance: famousPeople[personName] };
           } else {
@@ -182,10 +187,43 @@ const dmMachine = setup({
               utterance: personName 
                 ? `Sorry, I don't have any information about ${personName}.` 
                 : "I tried to fetch a person and failed miserably." 
+=======
+          if (personName && context.famousPeople[personName]) {
+            return { utterance: context.famousPeople[personName] };
+          } else {
+            return {
+              utterance: personName
+                ? `Sorry, I don't have any information about ${personName}.`
+                : "I tried to fetch a person and failed miserably.",
+>>>>>>> main
             };
           }
         },
       },
+<<<<<<< HEAD
+=======
+      on: { SPEAK_COMPLETE: "Done" },
+    },
+
+    CreateMeeting: { 
+      entry: {
+        type: "spst.speak",
+        params: ({ context }) => {
+          const person = context.person;
+          const time = context.meeting_time;
+
+          if (person && time) {
+            return { utterance: `A meeting with ${person}, ${time} has been created.` };
+          } else if (person) {
+            return { utterance: `Please tell me when to schedule the meeting with ${person}.` };
+          } else if (time) {
+            return { utterance: `Please tell me who to schedule the meeting with at ${time}.` };
+          } else {
+            return { utterance: "I need more information to create a meeting. Please tell me who and when to create a meeting!" };
+          }
+        },
+      },
+>>>>>>> main
       on: { SPEAK_COMPLETE: "Done" },
     },
 
@@ -250,8 +288,12 @@ const dmMachine = setup({
   },
 });
 
+<<<<<<< HEAD
 
   
+=======
+     
+>>>>>>> main
 const dmActor = createActor(dmMachine, {
   inspect: inspector.inspect,
 }).start();
