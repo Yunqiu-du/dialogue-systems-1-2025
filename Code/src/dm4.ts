@@ -69,14 +69,16 @@ const dmMachine = setup({
     events: {} as DMEvents,
   },
   actions: {
-    /** define your actions here */
-    "spst.speak": ({ context }, params: { utterance: string }) =>
-      context.spstRef.send({
-        type: "SPEAK",
-        value: {
-          utterance: params.utterance,
-        },
-      }),
+    "spst.speak": ({ context }, params: { utterance: string }) => {
+      if (context.spstRef && context.spstRef.state !== "stopped") {
+        context.spstRef.send({
+          type: "SPEAK",
+          value: {
+            utterance: params.utterance,
+          },
+        });
+      }
+    },
     "spst.listen": ({ context }) =>
       context.spstRef.send({
         type: "LISTEN",
@@ -87,7 +89,7 @@ const dmMachine = setup({
         person: ({ context }) => getPerson(context)
       }),
 
-    setMeetingInfo: assign({
+      setMeetingInfo: assign({
         person: ({ context }) => getPerson(context),
         meeting_time: ({ context }) => getMeetingTime(context)
       })
@@ -125,7 +127,7 @@ const dmMachine = setup({
             actions: { type: "setPerson"}
           },
           { 
-            target: "CreateMeeting",
+            target: "Meeting",
             guard: ({ context }) => context.interpretation?.topIntent === "createMeeting",
             actions: { type: "setMeetingInfo" }
           },
@@ -175,13 +177,13 @@ const dmMachine = setup({
         params: ({ context }) => {
           const personName = context.person;
 
-          if (personName && context.famousPeople[personName]) {
-            return { utterance: context.famousPeople[personName] };
+          if (personName && famousPeople[personName]) {
+            return { utterance: famousPeople[personName] };
           } else {
-            return {
-              utterance: personName
-                ? `Sorry, I don't have any information about ${personName}.`
-                : "I tried to fetch a person and failed miserably.",
+            return { 
+              utterance: personName 
+                ? `Sorry, I don't have any information about ${personName}.` 
+                : "I tried to fetch a person and failed miserably." 
             };
           }
         },
@@ -189,7 +191,13 @@ const dmMachine = setup({
       on: { SPEAK_COMPLETE: "Done" },
     },
 
-    CreateMeeting: { 
+    Done: {
+      on: {
+        CLICK: "Greeting",
+      },
+    },
+    
+    Meeting: { 
       entry: {
         type: "spst.speak",
         params: ({ context }) => {
@@ -208,10 +216,6 @@ const dmMachine = setup({
         },
       },
       on: { SPEAK_COMPLETE: "Done" },
-    },
-
-    Done: {
-      on: { CLICK: "Greeting" },
     },
   },
 });
