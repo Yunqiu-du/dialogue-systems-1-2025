@@ -125,11 +125,7 @@ const dmMachine = setup({
             actions: { type: "setPerson"}
           },
           { 
-<<<<<<< HEAD
-            target: "Meeting",
-=======
             target: "CreateMeeting",
->>>>>>> main
             guard: ({ context }) => context.interpretation?.topIntent === "createMeeting",
             actions: { type: "setMeetingInfo" }
           },
@@ -179,15 +175,6 @@ const dmMachine = setup({
         params: ({ context }) => {
           const personName = context.person;
 
-<<<<<<< HEAD
-          if (personName && famousPeople[personName]) {
-            return { utterance: famousPeople[personName] };
-          } else {
-            return { 
-              utterance: personName 
-                ? `Sorry, I don't have any information about ${personName}.` 
-                : "I tried to fetch a person and failed miserably." 
-=======
           if (personName && context.famousPeople[personName]) {
             return { utterance: context.famousPeople[personName] };
           } else {
@@ -195,13 +182,10 @@ const dmMachine = setup({
               utterance: personName
                 ? `Sorry, I don't have any information about ${personName}.`
                 : "I tried to fetch a person and failed miserably.",
->>>>>>> main
             };
           }
         },
       },
-<<<<<<< HEAD
-=======
       on: { SPEAK_COMPLETE: "Done" },
     },
 
@@ -223,77 +207,15 @@ const dmMachine = setup({
           }
         },
       },
->>>>>>> main
       on: { SPEAK_COMPLETE: "Done" },
     },
 
     Done: {
-      on: {
-        CLICK: "Greeting",
-      },
-    },
-
-    Meeting: {
-      initial: "AskWhen",
-      states: {
-        AskWhen: {
-          entry: { type: "spst.speak", params: { utterance: "When would you like to schedule the meeting?" } },
-          on: {
-            LISTEN_COMPLETE: {
-              target: "AskWho",
-              actions: assign({
-                meeting_time: ({ context }) => getMeetingTime(context),
-              }),
-            },
-          },
-        },
-    
-        AskWho: {
-          entry: { type: "spst.speak", params: { utterance: "Who would you like to meet with?" } },
-          on: {
-            LISTEN_COMPLETE: {
-              target: "Confirm",
-              actions: assign({
-                person: ({ context }) => getPerson(context),
-              }),
-            },
-          },
-        },
-    
-        Confirm: {
-          entry: ({ context }) => {
-            const { person, meeting_time } = context;
-            let confirmationMessage = "I need more information to schedule the meeting.";
-    
-            if (person && meeting_time) {
-              confirmationMessage = `Your meeting with ${person} is scheduled for ${meeting_time}.`;
-            } else if (person) {
-              confirmationMessage = `I need more information to schedule the meeting with ${person}.`;
-            } else if (meeting_time) {
-              confirmationMessage = `I need more information to schedule the meeting at ${meeting_time}.`;
-            } else {
-              confirmationMessage = "I need more information to schedule the meeting.";
-            }
-    
-            return { type: "spst.speak", params: { utterance: confirmationMessage } };
-          },
-          on: { SPEAK_COMPLETE: "Done" },
-        },
-    
-        Done: {
-          type: "final",
-        },
-      },
+      on: { CLICK: "Greeting" },
     },
   },
 });
 
-<<<<<<< HEAD
-
-  
-=======
-     
->>>>>>> main
 const dmActor = createActor(dmMachine, {
   inspect: inspector.inspect,
 }).start();
