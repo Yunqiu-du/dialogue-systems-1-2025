@@ -4,12 +4,12 @@ import { AnyActorRef } from "xstate";
 export interface DMContext {
   spstRef: AnyActorRef;
   lastResult: Hypothesis[] | null;
-  selectedPerson?: string;
-  selectedDay?: string;
-  selectedTime?: string;
-  comfirmationStatus?: "confirmed" | "rejected" | "pending";
-  MeetingDuration?: string;
-  isFullDay?: boolean;
+  appointment: {
+    person: string | null;
+    day: string | null;
+    time: string | null;
+    confirmation: string | null;
+  };
 }
 
 export type DMEvents = SpeechStateExternalEvent | { type: "CLICK" } | { type: 'RECOGNISED'; value: string };
